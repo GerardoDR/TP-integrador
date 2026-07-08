@@ -1,16 +1,38 @@
 package ar.edu.unlam.pb1.TPIntegrador.Interfaz.enumeradores;
 
 public enum Equipo {
-	ARGENTINA("Argentina"), ARGELIA("Argelia"), INGLATERRA("Inglaterra"), CROACIA("Croacia"), UZBEKISTAN("Uzbekistan"), COLOMBIA("Colombia"), QATAR("Qatar"), SUIZA("Suiza"), PORTUGAL("Portugal"), CONGO("Congo"), EEUU("Estados Unidos"), PARAGUAY("Paraguay"), MEXICO("Mexico"), COREA("Corea"), PANAMA("Panamá"), GHANA("Ghana");
+	PARAGUAY("Paraguay","PAR"),
+	FRANCIA("Francia","FRA"),
+	CANADA("Canadá","CAN"),
+	MARRUECOS("Marruecos","MAR"),
+	PORTUGAL("Portugal","POR"),
+	ESPANA("España","ESP"),
+	EEUU("Estados Unidos","EEUU"),
+	BELGICA("Bélgica","BEL"),
+	BRASIL("Brasil","BRA"),
+	NORUEGA("Noruega","NOR"),
+	MEXICO("México","MEX"),
+	INGLATERRA("Inglaterra", "ING"),
+	ARGENTINA("Argentina", "ARG"),
+	EGIPTO("Egipto","EGI"),
+	SUIZA("Suiza","SUI"),
+	COLOMBIA("Colombia","COL");
 	
-	private String valor;
+	private String equipo;
+	private String acronimo;
 	
-	Equipo(String descripcion){
-		this.valor= descripcion;
+	Equipo(String equipo, String acronimo){
+		this.equipo= equipo;
+		this.acronimo= acronimo;
+		
+	}
+	
+	public String getEquipo(){
+		return this.equipo;
 	}
 	
 	@Override
 	public String toString() {
-		return valor;
+		return this.equipo;
 	}
 }

@@ -4,7 +4,8 @@ public enum OpcionesMenuPrincipal {
 	REGISTRAR_PARTIDOS("Registrar partidos automáticamente"),
 	REGISTRAR_PARTICIPANTE("Registrar participante"),
 	GENERAR_RESULTADOS("Generar resultados aleatorios"),
-	CALCULAR_GANADOR("Calcular ganador");
+	CALCULAR_GANADOR("Calcular ganador"),
+	SALIR("Salir");
 
 	private String descripcion;
 
