@@ -2,13 +2,16 @@ package ar.edu.unlam.pb1.TPIntegrador.Interfaz;
 
 import java.util.Scanner;
 
+import ar.edu.unlam.pb1.TPIntegrador.Interfaz.enumeradores.OpcionesMenuPrincipal;
 import ar.edu.unlam.pb1.TPIntegrador.dominio.Prode;
 
 public class InterfazProde2026 {
 	static Scanner teclado = new Scanner(System.in);
 	static final int TOTAL_PARTIDOS = 8;
+	static final OpcionesMenuPrincipal[] opcionesMenum = OpcionesMenuPrincipal.values();
+	
 	public static void main(String[] args) {
-		imprimirMenuInicial();
+		imprimirBienvenida();
 		int cantidadParticipantes = teclado.nextInt();
 		Prode prode = new Prode(cantidadParticipantes);
 		prode.inicializarPartidos(TOTAL_PARTIDOS);
@@ -17,17 +20,20 @@ public class InterfazProde2026 {
 
 	}
 
-	public static void imprimirMenuInicial() {
-		System.out.println("=====================================\n\n" + "SISTEMA EL PRODE DEL MUNDIAL 2026\n\n"
-				+ "=====================================\n\n\n" + "Ingresar cantidad de participantes:");
+	private static void imprimirBienvenida() {
+		System.out.println("=====================================\n" + "SISTEMA EL PRODE DEL MUNDIAL 2026\n"
+				+ "=====================================\n" + "Ingresar cantidad de participantes:");
 	}
 
-	public static void imprimirMenuPrincipal() {
-		System.out.println("=====================================\n\n" + "SISTEMA EL PRODE DEL MUNDIAL 2026\n\n"
-				+ "=====================================\n\n\n" + "1 - Agregar nuevo partido\n\n"
-				+ "2 - Registrar participante\n\n" + "3 - Llenar prode\n\n" + "4 - Actualizar partido\n\n"
-				+ "5 - Generar resultados aleatorios\n\n" + "6 - Calcular ganador\n\n" + "0 - Salir\n\n\n"
-				+ "Seleccione una opción:");
+	private static void imprimirMenuPrincipal() {
+		mostrarPorPantalla("Seleccione una opción: ");
+		for(int i=0; i< opcionesMenum.length; i++) {
+			mostrarPorPantalla((i+1)+" - "+opcionesMenum[i].toString());	
+		}
+	}
+	
+	private static void mostrarPorPantalla(String mensaje) {
+		System.out.println(mensaje);
 	}
 
 }
