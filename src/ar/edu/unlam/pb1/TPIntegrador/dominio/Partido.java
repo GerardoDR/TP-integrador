@@ -13,7 +13,7 @@ public class Partido {
 	}
 	
 	public void setResultadoReal (Resultado resultadoReal) {
-		
+		this.resultadoReal=resultadoReal;
 	}
 	
 	public Resultado getResultadoReal() {

@@ -16,11 +16,13 @@ public class InterfazProde2026 {
 	static final OpcionesMenuPrincipal[] opcionesMenum = OpcionesMenuPrincipal.values();
 	
 	public static void main(String[] args) {
+		//le damos la bienvenida la prode, y posteriormente comienza el show :)
 		imprimirBienvenida();
 		int cantidadParticipantes = teclado.nextInt();
 		Prode prode = new Prode(TOTAL_PARTIDOS, cantidadParticipantes);
 		OpcionesMenuPrincipal opcion=null;
 		boolean validacionRegistrarPartido = false;
+		boolean validacionResultadosGenerados = false;
 
 		while(opcion!=OpcionesMenuPrincipal.SALIR) {
 			
@@ -35,17 +37,23 @@ public class InterfazProde2026 {
 			case REGISTRAR_PARTICIPANTE:
 				if(validacionRegistrarPartido == true) {
 				registrarParticipante(prode);
-				}else mostrarPorPantalla("No se registraron los partidos");
+				}else mostrarPorPantalla("\tPara registrar participantes se requiere antes registrar los partidos\n");
 				break;
 			case GENERAR_RESULTADOS:
 				if (prode.getCantidadParticipantes() == prode.getParticipantes().length) {
-					//Acá estaria el metodo de generar_resultados
+					generarResultados(prode);
+					validacionResultadosGenerados = true;
 				} else {
 					mostrarPorPantalla("No se han registrado aún la cantidad total de participantes.");
 					mostrarPorPantalla("Cantidad registrada de participantes actuales "+ prode.getCantidadParticipantes());
 				}
 				break;
 			case CALCULAR_GANADOR:
+				if(validacionResultadosGenerados){
+					calcularGanador(prode);
+				} else {
+					System.out.println("Se deben generar primero los resultados antes de poder calcular un ganador");	
+				}
 				break;
 			case SALIR:
 				break;
@@ -74,11 +82,12 @@ public class InterfazProde2026 {
 	}
 	
 	private static void registrarPartido(Prode prode, String equipoLocal, String equipoVisitante) {
-		if(prode.registrarPartido(equipoLocal, equipoVisitante)) {
-			mostrarPorPantalla("Partido registrado: "+equipoLocal+" vs. "+equipoVisitante);
-		} else {
-			mostrarPorPantalla("Partido no registrado: "+equipoLocal+" vs. "+equipoVisitante);
-		}
+		mostrarPorPantalla("Partido Registrado: "+prode.registrarPartido(equipoLocal, equipoVisitante).toString());
+//		if(prode.registrarPartido(equipoLocal, equipoVisitante)) {
+//			mostrarPorPantalla("Partido registrado: "+equipoLocal+" vs. "+equipoVisitante);
+//		} else {
+//			mostrarPorPantalla("Partido no registrado: "+equipoLocal+" vs. "+equipoVisitante);
+//		}
 	}
 	
 	private static void registrarParticipante(Prode prode) {
@@ -98,10 +107,10 @@ public class InterfazProde2026 {
 			Partido [] partidos = prode.getPartidos();
 			for (int i = 0; i < partidos.length; i++) {
 				//solicitamos los datos para instanciar la predicción.
-				mostrarPorPantalla("Predicción "+(i+1)+" de "+partidos.length);
-				mostrarPorPantalla("¿Quién ganará?");
-				mostrarPorPantalla("Equipo local: "+partidos[i].getEquipoLocal());
-				mostrarPorPantalla("Equipo visitante: "+partidos[i].getEquipoVisitante());
+				mostrarPorPantalla("\nPredicción "+(i+1)+" de "+partidos.length);
+				mostrarPorPantalla("\n⚽¿Quién ganará?⚽");
+				mostrarPorPantalla("🔴Equipo local: "+partidos[i].getEquipoLocal());
+				mostrarPorPantalla("🔴Equipo visitante: "+partidos[i].getEquipoVisitante()+"\n");
 				mostrarResultadosPosibles(resultadosPosibles);
 				Resultado resultadoDelPartido = ingresarResultado(resultadosPosibles);
 				
@@ -147,6 +156,22 @@ public class InterfazProde2026 {
 		return resultados[opcion-1];
 	}
 
+	private static void generarResultados(Prode prode){
+		prode.generarResultadosPartidos();
+		mostrarPorPantalla("Resultados generados.");
+	}
+
+	private static void calcularGanador(Prode prode){
+		prode.calcularPuntajes();
+		Participante[] ganadores = prode.obtenerGanador();
+		mostrarPorPantalla("GANADOR/ES: ");
+		for (int i = 0; i < ganadores.length; i++) {
+			if (ganadores[i]!=null) {
+				mostrarPorPantalla("\t🏆 "+ganadores[i].getNombre() + " - Puntaje: "+ganadores[i].getPuntaje());
+			}
+		}
+	}
+	
 	private static OpcionesMenuPrincipal ingresaOpcion() {
 		int opcion= teclado.nextInt();
 		return opcionesMenum[opcion-1];

@@ -18,6 +18,7 @@ public class Prediccion {
 	}
 	
 	public boolean esAcertada () {
+		
 		return false;
 	}
 }
