@@ -14,7 +14,13 @@ public class Prode {
 		this.cantidadPartidosRegistrados=0;
 	}
 	
-	public boolean registrarParticipantes (Participante participantes) {
+	public boolean registrarParticipantes (Participante participante) {
+		//guardamos el nuevo participante en el array de participantes
+		if(this.cantidadParticipantes< this.participantes.length){
+			this.participantes[cantidadParticipantes] = participante;
+			this.cantidadParticipantes++;
+			return true;
+		}
 		return false;
 	}
 	
@@ -22,16 +28,26 @@ public class Prode {
 	public boolean registrarPartido(String equipoLocal, String equipoVisitante) {
 		if(cantidadPartidosRegistrados<partidos.length) {
 			this.partidos[cantidadPartidosRegistrados] = new Partido(equipoLocal,equipoVisitante);
+			cantidadPartidosRegistrados++;
 			return true;
 		}
 		return false;
 	}
 
 	public Participante obtenerGanador() {
+		
 		return null;
 	}
 	
 	public Partido[] getPartidos() {
 		return this.partidos;
+	}
+
+	public Participante[] getParticipantes(){
+		return this.participantes;
+	}
+
+	public int getCantidadParticipantes(){
+		return this.cantidadParticipantes;
 	}
 }

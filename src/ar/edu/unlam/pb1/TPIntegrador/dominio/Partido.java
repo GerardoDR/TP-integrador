@@ -27,4 +27,9 @@ public class Partido {
 	public String getEquipoLocal () {
 		return this.equipoLocal;
 	}
+
+	@Override
+	public String toString() {
+		return this.equipoLocal+" vs "+this.equipoVisitante;
+	}
 }

@@ -9,17 +9,21 @@ public class Participante {
 	public Participante (String nombre, int maxPredicciones) {
 		this.nombre = nombre;
 		this.predicciones = new Prediccion [maxPredicciones];
+		this.cantidadPredicciones=0;
 	} 
 	
-	public boolean agregarPrediccion (Prediccion predicciones[]) {
-		//hacer un for
-		for (cantidadPredicciones = 0; cantidadPredicciones < this.predicciones.length; cantidadPredicciones++) {
-			
+	public boolean agregarPrediccion (Prediccion prediccion) {
+
+		if(cantidadPredicciones < predicciones.length){
+			this.predicciones[cantidadPredicciones]= prediccion;
+			cantidadPredicciones++;
+			return true;
 		}
 		return false;
 	}
 	
 	public int calcularPuntaje () {
+		
 		return 1;
 	}
 	

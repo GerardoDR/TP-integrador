@@ -4,7 +4,11 @@ import java.util.Scanner;
 
 import ar.edu.unlam.pb1.TPIntegrador.Interfaz.enumeradores.Equipo;
 import ar.edu.unlam.pb1.TPIntegrador.Interfaz.enumeradores.OpcionesMenuPrincipal;
+import ar.edu.unlam.pb1.TPIntegrador.dominio.Participante;
+import ar.edu.unlam.pb1.TPIntegrador.dominio.Partido;
+import ar.edu.unlam.pb1.TPIntegrador.dominio.Prediccion;
 import ar.edu.unlam.pb1.TPIntegrador.dominio.Prode;
+import ar.edu.unlam.pb1.TPIntegrador.dominio.Resultado;
 
 public class InterfazProde2026 {
 	static Scanner teclado = new Scanner(System.in);
@@ -16,6 +20,8 @@ public class InterfazProde2026 {
 		int cantidadParticipantes = teclado.nextInt();
 		Prode prode = new Prode(TOTAL_PARTIDOS, cantidadParticipantes);
 		OpcionesMenuPrincipal opcion=null;
+		boolean validacionRegistrarPartido = false;
+
 		while(opcion!=OpcionesMenuPrincipal.SALIR) {
 			
 			imprimirMenuPrincipal();
@@ -24,18 +30,30 @@ public class InterfazProde2026 {
 			switch (opcion) {
 			case REGISTRAR_PARTIDOS:
 				registrarPartidosAutomaticamente(prode);
+				validacionRegistrarPartido = true;
 				break;
 			case REGISTRAR_PARTICIPANTE:
+				if(validacionRegistrarPartido == true) {
+				registrarParticipante(prode);
+				}else mostrarPorPantalla("No se registraron los partidos");
+				break;
 			case GENERAR_RESULTADOS:
+				if (prode.getCantidadParticipantes() == prode.getParticipantes().length) {
+					//Acá estaria el metodo de generar_resultados
+				} else {
+					mostrarPorPantalla("No se han registrado aún la cantidad total de participantes.");
+					mostrarPorPantalla("Cantidad registrada de participantes actuales "+ prode.getCantidadParticipantes());
+				}
+				break;
 			case CALCULAR_GANADOR:
+				break;
 			case SALIR:
+				break;
 			default:
 				mostrarPorPantalla("Opción inválida");
 			}
-			
 		}
 		
-
 	}
 
 	private static void imprimirBienvenida() {
@@ -63,10 +81,77 @@ public class InterfazProde2026 {
 		}
 	}
 	
+	private static void registrarParticipante(Prode prode) {
+
+		//Validación de que el cupo de participantes no está lleno.
+		if(prode.getCantidadParticipantes() < prode.getParticipantes().length){
+			mostrarPorPantalla("Ingresar nombre del participante:");
+			String nombreParticipante= teclado.next();
+			
+			//guardamos array de resultados a mostrar
+			Resultado resultadosPosibles[] = Resultado.values();
+			
+			//instanciamos el nuevo participante
+			Participante nuevoParticipante = new Participante(nombreParticipante, TOTAL_PARTIDOS);
+			
+			//recorremos los partidos para asignar una prediccion en cada uno
+			Partido [] partidos = prode.getPartidos();
+			for (int i = 0; i < partidos.length; i++) {
+				//solicitamos los datos para instanciar la predicción.
+				mostrarPorPantalla("Predicción "+(i+1)+" de "+partidos.length);
+				mostrarPorPantalla("¿Quién ganará?");
+				mostrarPorPantalla("Equipo local: "+partidos[i].getEquipoLocal());
+				mostrarPorPantalla("Equipo visitante: "+partidos[i].getEquipoVisitante());
+				mostrarResultadosPosibles(resultadosPosibles);
+				Resultado resultadoDelPartido = ingresarResultado(resultadosPosibles);
+				
+				//instanciamos la nueva prediccion
+				Prediccion nuevaPrediccion = new Prediccion(partidos[i], resultadoDelPartido);
+				
+				//guardamos la prediccion
+				if(nuevoParticipante.agregarPrediccion(nuevaPrediccion)){
+					mostrarPorPantalla("Predicción registrada");
+				}
+			}
+			if(prode.registrarParticipantes(nuevoParticipante)){
+				mostrarPorPantalla("Participante agregado");
+			} else {
+				mostrarPorPantalla("El cupo de participantes está lleno.");
+			}
+
+		} else{
+			mostrarPorPantalla("El cupo de participantes está lleno.");
+		}
+	}
+	
+	private static void mostrarResultadosPosibles(Resultado[] resultados){
+		for (int i = 0; i < resultados.length-1; i++) {
+			if(resultados[i] != null){
+				mostrarPorPantalla((i+1)+" - "+resultados[i].getResultado());
+			}
+		}
+	}
+	
+	private static Resultado ingresarResultado(Resultado[] resultados){
+		int opcion = 0;
+		//instanciamos opcion en 0 para que el usuario ponga una opcion valida del enum Resultado, con los resultados posibles.
+		while (opcion < 1 || opcion > resultados.length-1) {
+			mostrarPorPantalla("Ingresar predicción sobre el partido: ");
+			opcion = teclado.nextInt();
+			//En caso de que ponga incorrectamente la opcion del enum, lo mandamos a volver a poner la opcion corecta de las existentes en el enum Resultado.
+			if (opcion < 1 || opcion>resultados.length-1) {
+				mostrarPorPantalla("Opción inválida. Ingrese nuevamente.");
+			}
+		}
+		//Retornamos la opcion que nos manda el usuario, con -1 para que sea la opcion correcta del enum.
+		return resultados[opcion-1];
+	}
+
 	private static OpcionesMenuPrincipal ingresaOpcion() {
 		int opcion= teclado.nextInt();
 		return opcionesMenum[opcion-1];
 	}
+	
 	private static void imprimirMenuPrincipal() {
 		mostrarPorPantalla("Seleccione una opción: ");
 		for(int i=0; i< opcionesMenum.length; i++) {
