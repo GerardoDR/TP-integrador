@@ -82,10 +82,6 @@ public class InterfazProde2026 {
 			registrarPartido(prode, equipos[posicionInicial].getEquipo(), equipos[posicionInicial+1].getEquipo());			
 		}
 
-		// for(int i=0; i<prode.getPartidos().length*2; i+=2){
-		// 	registrarPartido(prode, equipos[i].getEquipo(), equipos[i+1].getEquipo());			
-		// }
-
 		//espacio al final
 		mostrarPorPantalla("");
 	}

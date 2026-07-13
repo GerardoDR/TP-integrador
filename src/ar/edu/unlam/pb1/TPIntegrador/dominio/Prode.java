@@ -69,7 +69,7 @@ public class Prode {
 		for (int i = 1; i < participantes.length; i++) {
 			if(ganadores[0].getPuntaje() == participantes[i].getPuntaje()){
 				for(int j=1; j < ganadores.length; j++){
-					//nos posicionamos en el primer índice libre del array de ganadores para guardar el participante con puntaje ganador coincidente
+					//Nos posicionamos en el primer índice libre del array de ganadores para guardar el participante con puntaje ganador coincidente
 					if (ganadores[j]==null) {
 						ganadores[j]=participantes[i];
 					}

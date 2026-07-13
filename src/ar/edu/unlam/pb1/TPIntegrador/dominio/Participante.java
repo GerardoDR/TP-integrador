@@ -41,9 +41,6 @@ public class Participante {
 					if(predicciones[j].esAcertada(partidoBuscado.getResultadoReal())){
 						this.setPuntaje(this.getPuntaje()+1);
 					}
-						// if(partidos[i].getResultadoReal().equals(predicciones[j].getResultadoElegido())){
-						// 	this.setPuntaje(this.getPuntaje()+1);
-						// }
 				}
 			}
 		}
