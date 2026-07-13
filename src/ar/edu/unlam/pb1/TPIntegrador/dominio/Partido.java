@@ -30,6 +30,6 @@ public class Partido {
 
 	@Override
 	public String toString() {
-		return this.equipoLocal+" vs "+this.equipoVisitante;
+		return this.equipoLocal+" vs "+this.equipoVisitante + " | resultado: "+this.resultadoReal;
 	}
 }

@@ -175,8 +175,25 @@ public class InterfazProde2026 {
 				mostrarPorPantalla("\t🏆 "+ganadores[i].getNombre() + " - Puntaje: "+ganadores[i].getPuntaje());
 			}
 		}
+		verTodosLosDatos(prode);
 	}
 	
+	private static void verTodosLosDatos(Prode prode){
+		Partido[] partidos = prode.getPartidos();
+		Participante[] participantes= prode.getParticipantes();
+		mostrarPorPantalla("\n==========");
+		for (int i = 0; i < partidos.length; i++) {
+			mostrarPorPantalla(partidos[i].toString());
+			for (int j = 0; j < participantes.length; j++) {
+				for (int k = 0; k < participantes[j].getPredicciones().length; k++) {
+					if (participantes[j].getPredicciones()[k].getPartido().equals(partidos[i])) {
+						mostrarPorPantalla("\t"+participantes[j].getNombre()+ " eligió "+participantes[j].getPredicciones()[k].getResultadoElegido());
+					}
+				}
+			}
+		mostrarPorPantalla("+-------------------");
+		}
+	}
 	private static OpcionesMenuPrincipal ingresaOpcion() {
 		int opcion= teclado.nextInt();
 		return opcionesMenum[opcion-1];

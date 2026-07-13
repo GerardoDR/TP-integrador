@@ -49,7 +49,7 @@ public class Prode {
 	
 	public void calcularPuntajes (){
 		for (int i = 0; i < participantes.length; i++) {
-			participantes[i].calcularPuntaje(partidos);
+			participantes[i].calcularPuntaje();
 		}
 		this.puntajesCalculados =true;
 	}

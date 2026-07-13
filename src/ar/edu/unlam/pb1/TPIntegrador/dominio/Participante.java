@@ -28,20 +28,10 @@ public class Participante {
 		return predicciones;
 	}
 	
-	public void calcularPuntaje (Partido[] partidos) {
-		for (int i = 0; i < partidos.length; i++) {
-			for (int j = 0; j < predicciones.length; j++) {
-				Partido partidoBuscado= partidos[i];
-				if(partidoBuscado.getEquipoLocal().equals(
-					predicciones[j].getPartido().getEquipoLocal()
-				) && partidoBuscado.getEquipoVisitante().equals(
-						predicciones[j].getPartido().getEquipoVisitante()
-					)
-				) {
-					if(predicciones[j].esAcertada(partidoBuscado.getResultadoReal())){
-						this.setPuntaje(this.getPuntaje()+1);
-					}
-				}
+	public void calcularPuntaje () {
+		for (int i = 0; i < predicciones.length; i++) {
+			if(this.predicciones[i].esAcertada()){
+				this.setPuntaje(getPuntaje()+1);
 			}
 		}
 	}
