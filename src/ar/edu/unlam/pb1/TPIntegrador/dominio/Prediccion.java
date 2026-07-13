@@ -17,8 +17,10 @@ public class Prediccion {
 		return this.resultadoElegido;
 	}
 	
-	public boolean esAcertada () {
-		
+	public boolean esAcertada (Resultado resultadoReal) {
+		if(resultadoReal.equals(this.resultadoElegido)){
+			return true;
+		}
 		return false;
 	}
 }

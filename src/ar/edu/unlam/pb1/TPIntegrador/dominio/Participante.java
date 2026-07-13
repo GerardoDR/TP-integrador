@@ -31,15 +31,19 @@ public class Participante {
 	public void calcularPuntaje (Partido[] partidos) {
 		for (int i = 0; i < partidos.length; i++) {
 			for (int j = 0; j < predicciones.length; j++) {
-				if(partidos[i].getEquipoLocal().equals(
+				Partido partidoBuscado= partidos[i];
+				if(partidoBuscado.getEquipoLocal().equals(
 					predicciones[j].getPartido().getEquipoLocal()
-				) && partidos[i].getEquipoVisitante().equals(
+				) && partidoBuscado.getEquipoVisitante().equals(
 						predicciones[j].getPartido().getEquipoVisitante()
 					)
 				) {
-						if(partidos[i].getResultadoReal().equals(predicciones[j].getResultadoElegido())){
-							this.setPuntaje(this.getPuntaje()+1);
-						}
+					if(predicciones[j].esAcertada(partidoBuscado.getResultadoReal())){
+						this.setPuntaje(this.getPuntaje()+1);
+					}
+						// if(partidos[i].getResultadoReal().equals(predicciones[j].getResultadoElegido())){
+						// 	this.setPuntaje(this.getPuntaje()+1);
+						// }
 				}
 			}
 		}

@@ -35,11 +35,13 @@ public class InterfazProde2026 {
 				validacionRegistrarPartido = true;
 				break;
 			case REGISTRAR_PARTICIPANTE:
+				//Validación: para registrar predicciones se necesitán los partidos generados previamente.
 				if(validacionRegistrarPartido == true) {
 				registrarParticipante(prode);
 				}else mostrarPorPantalla("\tPara registrar participantes se requiere antes registrar los partidos\n");
 				break;
 			case GENERAR_RESULTADOS:
+				//validación: Las predicciones deben ser generadas antes de que existan los resultados reales.
 				if (prode.getCantidadParticipantes() == prode.getParticipantes().length) {
 					generarResultados(prode);
 					validacionResultadosGenerados = true;
@@ -49,6 +51,7 @@ public class InterfazProde2026 {
 				}
 				break;
 			case CALCULAR_GANADOR:
+				//Validación: Se requieren los resultados de los partidos para calcular los puntajes.
 				if(validacionResultadosGenerados){
 					calcularGanador(prode);
 				} else {
@@ -56,6 +59,7 @@ public class InterfazProde2026 {
 				}
 				break;
 			case SALIR:
+				mostrarPorPantalla("¡Gracias por participar!");
 				break;
 			default:
 				mostrarPorPantalla("Opción inválida");
@@ -72,22 +76,27 @@ public class InterfazProde2026 {
 	private static void registrarPartidosAutomaticamente(Prode prode) {
 		//DATOS PRECARGADOS
 		Equipo[]equipos = Equipo.values();
-		
+
 		for(int i=0; i< prode.getPartidos().length; i++) {
 			int posicionInicial=i*2;
 			registrarPartido(prode, equipos[posicionInicial].getEquipo(), equipos[posicionInicial+1].getEquipo());			
 		}
+
+		// for(int i=0; i<prode.getPartidos().length*2; i+=2){
+		// 	registrarPartido(prode, equipos[i].getEquipo(), equipos[i+1].getEquipo());			
+		// }
+
 		//espacio al final
 		mostrarPorPantalla("");
 	}
 	
 	private static void registrarPartido(Prode prode, String equipoLocal, String equipoVisitante) {
-		mostrarPorPantalla("Partido Registrado: "+prode.registrarPartido(equipoLocal, equipoVisitante).toString());
-//		if(prode.registrarPartido(equipoLocal, equipoVisitante)) {
-//			mostrarPorPantalla("Partido registrado: "+equipoLocal+" vs. "+equipoVisitante);
-//		} else {
-//			mostrarPorPantalla("Partido no registrado: "+equipoLocal+" vs. "+equipoVisitante);
-//		}
+		String partido = equipoLocal+" vs "+equipoVisitante;
+		if(prode.registrarPartido(equipoLocal, equipoVisitante)) {
+			mostrarPorPantalla("Partido registrado: "+partido);
+		} else {
+			mostrarPorPantalla("Partido no registrado: "+partido);
+		}
 	}
 	
 	private static void registrarParticipante(Prode prode) {
@@ -108,9 +117,9 @@ public class InterfazProde2026 {
 			for (int i = 0; i < partidos.length; i++) {
 				//solicitamos los datos para instanciar la predicción.
 				mostrarPorPantalla("\nPredicción "+(i+1)+" de "+partidos.length);
-				mostrarPorPantalla("\n⚽¿Quién ganará?⚽");
-				mostrarPorPantalla("🔴Equipo local: "+partidos[i].getEquipoLocal());
-				mostrarPorPantalla("🔴Equipo visitante: "+partidos[i].getEquipoVisitante()+"\n");
+				mostrarPorPantalla("\n🔮¿Quién ganará?🔮");
+				mostrarPorPantalla("⚽Equipo local: "+partidos[i].getEquipoLocal());
+				mostrarPorPantalla("⚽Equipo visitante: "+partidos[i].getEquipoVisitante()+"\n");
 				mostrarResultadosPosibles(resultadosPosibles);
 				Resultado resultadoDelPartido = ingresarResultado(resultadosPosibles);
 				

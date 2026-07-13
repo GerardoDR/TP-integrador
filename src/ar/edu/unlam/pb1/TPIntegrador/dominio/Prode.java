@@ -26,13 +26,13 @@ public class Prode {
 	}
 	
 
-	public Partido registrarPartido(String equipoLocal, String equipoVisitante) {
+	public boolean registrarPartido(String equipoLocal, String equipoVisitante) {
 		if(cantidadPartidosRegistrados<partidos.length) {
 			this.partidos[cantidadPartidosRegistrados] = new Partido(equipoLocal,equipoVisitante);
 			cantidadPartidosRegistrados++;
-			return this.partidos[cantidadPartidosRegistrados-1];
+			return true;
 		}
-		return null;
+		return false;
 	}
 
 	public void generarResultadosPartidos(){
@@ -54,18 +54,22 @@ public class Prode {
 		this.puntajesCalculados =true;
 	}
 
+	//Se reemplazó lo que retorna esta función con respecto al enunciado (Participante por Participante[]) por si dos o más participantes coinciden en puntaje máximo.
 	public Participante[] obtenerGanador() {
 		if(!puntajesCalculados){
+			//se asegura de que estén los puntajes calculados antes de hacer nada.
 			this.calcularPuntajes();
 		}
 		ordenarParticipantesPorPuntaje();
 		
 		Participante [] ganadores = new Participante[participantes.length];
-		//guardamos al primer ganador
+		//guardamos al primer ganador para poder buscar otros puntajes coincidentes.
 		ganadores[0]=participantes[0];
+
 		for (int i = 1; i < participantes.length; i++) {
 			if(ganadores[0].getPuntaje() == participantes[i].getPuntaje()){
 				for(int j=1; j < ganadores.length; j++){
+					//nos posicionamos en el primer índice libre del array de ganadores para guardar el participante con puntaje ganador coincidente
 					if (ganadores[j]==null) {
 						ganadores[j]=participantes[i];
 					}
